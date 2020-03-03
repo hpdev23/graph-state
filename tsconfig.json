@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "graph-state": [
+        "dist/graph-state"
+      ],
+      "graph-state/*": [
+        "dist/graph-state/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

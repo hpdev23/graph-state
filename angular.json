@@ -2,5 +2,163 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "graph-state": {
+      "projectType": "library",
+      "root": "projects/graph-state",
+      "sourceRoot": "projects/graph-state/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/graph-state/tsconfig.lib.json",
+            "project": "projects/graph-state/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/graph-state/src/test.ts",
+            "tsConfig": "projects/graph-state/tsconfig.spec.json",
+            "karmaConfig": "projects/graph-state/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/graph-state/tsconfig.lib.json",
+              "projects/graph-state/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "graph-state-test-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/graph-state-test-app",
+      "sourceRoot": "projects/graph-state-test-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/graph-state-test-app",
+            "index": "projects/graph-state-test-app/src/index.html",
+            "main": "projects/graph-state-test-app/src/main.ts",
+            "polyfills": "projects/graph-state-test-app/src/polyfills.ts",
+            "tsConfig": "projects/graph-state-test-app/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/graph-state-test-app/src/favicon.ico",
+              "projects/graph-state-test-app/src/assets"
+            ],
+            "styles": [
+              "projects/graph-state-test-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/graph-state-test-app/src/environments/environment.ts",
+                  "with": "projects/graph-state-test-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "graph-state-test-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "graph-state-test-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "graph-state-test-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/graph-state-test-app/src/test.ts",
+            "polyfills": "projects/graph-state-test-app/src/polyfills.ts",
+            "tsConfig": "projects/graph-state-test-app/tsconfig.spec.json",
+            "karmaConfig": "projects/graph-state-test-app/karma.conf.js",
+            "assets": [
+              "projects/graph-state-test-app/src/favicon.ico",
+              "projects/graph-state-test-app/src/assets"
+            ],
+            "styles": [
+              "projects/graph-state-test-app/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/graph-state-test-app/tsconfig.app.json",
+              "projects/graph-state-test-app/tsconfig.spec.json",
+              "projects/graph-state-test-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/graph-state-test-app/e2e/protractor.conf.js",
+            "devServerTarget": "graph-state-test-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "graph-state-test-app:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "graph-state"
 }
